@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="reminder">
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="js/angular.js"></script>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script src="js/index.js"></script>
+		<link rel="stylesheet" href="css/index.css" />
+		
+	</head>
+	<body ng-controller="reminderCtrl">
+	<div id="main-pane">
+		<!--左边列表-->
+		<div id="list">
+			<!--提醒事项-->
+			<div class="atv">
+				<div class="atv-left">
+					<div class="atv-logo"></div>
+					<div class="atv-sx">提醒事项</div>
+					<div class="chevro"></div>
+				</div>
+				<div class="atv-right" ng-click="addlist();savelocal()">
+					<div class="add-img"></div>
+				</div>
+			</div>
+			<!--新列表-->
+			<div id="new">
+				<!--已经-->
+				 <div class="alerdy">
+				 	<div class="kong">
+				 		<div class="icon"></div>
+				 		<div class="title">已计划</div>
+				 		<div class="row-divider-top"></div>
+				 		<div class="row-divider-bottom"></div>
+				 	</div>
+				 </div>
+				<!--color-->
+				<div my-div>
+					<!--<div id="reminders" >-->
+						<div class="view" ng-repeat="v in list track by $index" ng-class="{active:cu===$index}">
+							<div class="sc-outline">
+								<div class="circle {{v.theme}}"></div>
+								<input type="text" ng-model="v.name" ng-keyup="savelocal()" class="title"/>
+								<!--<label class="title">{{v.name}}</label>-->
+								<div title="编辑共享设置" class="share-icon-container share-icon-off"></div>
+								<div class="row-divider-top"></div>
+					 			<div class="row-divider-bottom"></div>
+							</div>
+						</div>
+					<!--</div>-->
+				</div>
+				
+
+					
+				
+		</div>
+		
+	</div>
+	<!--右边内容-->
+		<div id="container">
+			<!--弹出框-->
+			<div id="chu">
+				<div class="kuang"></div>
+				<div class="nei">
+					<input type="text" name="xinliebiao"   class="{{list[cu].theme}}"  ng-model="list[cu].name" ng-keyup="savelocal()"/>
+					<span class="lis-c">列表颜色</span>
+					<div class="color">
+						<div class="anual {{$n}}" ng-repeat="v in colors"  ng-click='list[cu].theme=v;savelocal()'>
+							<div class="an-img {{v}}"></div>
+						</div>
+						
+					</div>
+					<div class="bottom">
+						<div class="close" ng-click="del()">删除</div>
+						<div class="qu hidden" ng-click="cancel()">取消</div>
+						<div class="shu"></div>
+						<div class="wan hidden" ng-click="cancel()">完成</div>
+					</div>
+				</div>
+				
+			</div>
+			
+			<!--输入框-->
+			<div class="input">
+				<div class="put-left">
+					<div class="padding">
+						<div  class="hint ellipsis">搜索所有提醒</div>
+						<input aria-label="搜索所有提醒" class="field" type="text" name="" value="" >
+					</div>
+					<div class="sou">
+						<div  class="search-icon" ></div>
+					</div>
+				</div> 
+				<!--账号-->
+				<div class="put-right">
+					<div class="button">
+						<div class="button-label">王杰霞</div>
+						<div class="chevron"></div>
+					</div>
+					<div class="divider"></div>
+					<div class="help">
+						<div class="help-icon"></div>
+					</div>
+				</div>
+			</div>
+			<!--列表内容-->
+			<div id="content">
+				<div class="list-top">
+					<div class="list-new {{list[cu].theme}}">
+						{{list[cu].name}}
+					</div>
+					<div my-button class=' {{list[cu].theme}}'>
+						<div class="xiang {{list[cu].theme}}" >选项</div>
+					</div>
+					
+				</div>
+				<div class="wc">
+					<div class="row-divider-top" ></div>
+					<div class="sj">
+						<div class="yi"  >
+							<div class="img"></div>
+							
+							
+							<div class="com">
+								已完成:  {{count()}}项
+								
+							</div>
+							<div class="qin {{list[cu].theme}}" ng-click="clear();savelocal()">清楚已完成事项</div>
+							<div class="all" ng-click="active:{{list[cu].theme}}" ng-if="v.state===1" ng-repeat="v in list[cu].todos">
+								<div class="com-img yuan" ng-click="v.state=0;savelocal()"></div>
+								<p>{{v.name}}</p>
+							</div>
+						</div>
+						 
+						<div class="yi">
+							<div class="img"></div>
+							<div class="com">
+								未完成： {{count1()}}项
+							</div>
+							<div class="all " ng-click="active:{{list[cu].theme}}"  ng-if="v.state===0" ng-repeat="v in list[cu].todos">
+								<div class="com-img" ng-click="v.state=1;savelocal()"></div>
+								<p>{{v.name}}</p>
+							</div>
+						</div> 
+						
+						<div class="yi">
+							<div class="all">
+								<div class="com-img" ng-click='list[cu].todos.push({name:value,state:0});value="";savelocal()'></div>
+								<input type="text" ng-model="value"/>
+
+							</div>
+							<div class="com">
+								新项目
+							</div>
+							
+						</div>
+							
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	</body>
+</html>
